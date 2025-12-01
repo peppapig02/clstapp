@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="clstapp">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <title>clstapp</title>
+  <link rel="manifest" href="manifest.json">
+  <script defer src="/__/firebase/9.0.0/firebase-app.js"></script>
+  <script defer src="/__/firebase/9.0.0/firebase-auth.js"></script>
+  <script defer src="/__/firebase/init.js"></script>
+  <meta name="google-signin-client_id" content="42299134512-fo43hn7fpmv9ilr66gp984ms80kqlb2e.apps.googleusercontent.com">
+</head>
+<body>
+  <script>
+    window.addEventListener('load', function(ev) {
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
