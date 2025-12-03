@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
   <base href="$FLUTTER_BASE_HREF">
@@ -19,18 +19,52 @@
 </head>
 <body>
   <script>
-    window.addEventListener('load', function(ev) {
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
-        }
-      });
-    });
-  </script>
+window.addEventListener('load', (event) => {
+  flutter.loader.load({
+    serviceWorker: {
+      serviceWorkerVersion: serviceWorkerVersion,
+    }
+  });
+});
+</script>
+
+</body>
+</html> -->
+<!DOCTYPE html>
+<html>
+
+
+
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="clstapp">
+
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>clstapp</title>
+  <link rel="manifest" href="manifest.json">
+
+  
+  <meta name="google-signin-client_id" content="42299134512-fo43hn7fpmv9ilr66gp984ms80kqlb2e.apps.googleusercontent.com">
+
+
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="/__/firebase/init.js?useEmulator=false"></script>
+
+</head>
+<body>
+
+  <!-- indispensable pour que flutter.loader existe -->
+  <script src="flutter_bootstrap.js" async></script>
+
 </body>
 </html>

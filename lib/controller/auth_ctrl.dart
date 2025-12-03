@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-//import 'package:twitter_login/twitter_login.dart';
 
 class AuthController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -39,53 +38,47 @@ class AuthController {
 
   Future<UserCredential?> signInWithGoogle() async {
     try {
+      print('Début connexion Google...');
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) return null;
+      if (googleUser == null) {
+        print('Utilisateur a annulé la connexion Google');
+        throw 'Connexion Google annulée';
+      }
 
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
+      print('Utilisateur Google récupéré: ${googleUser.email}');
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      
+      print('Tokens récupérés - AccessToken: ${googleAuth.accessToken != null}, IdToken: ${googleAuth.idToken != null}');
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      return await _auth.signInWithCredential(credential);
+      print('Tentative de connexion Firebase...');
+      final result = await _auth.signInWithCredential(credential);
+      print('Connexion Google réussie!');
+      return result;
     } catch (e) {
-      throw e.toString();
+      print('Erreur Google Sign-In: $e');
+      if (e.toString().contains('popup_closed')) {
+        throw 'Connexion Google annulée';
+      }
+      throw 'Erreur de connexion Google: $e';
     }
   }
 
-  Future<void> signInWithTwitter() async {
+  Future<UserCredential?> signInWithTwitter() async {
     try {
+      print('Début connexion Twitter...');
       TwitterAuthProvider twitterProvider = TwitterAuthProvider();
-      await _auth.signInWithProvider(twitterProvider);
+      final result = await _auth.signInWithProvider(twitterProvider);
+      print('Connexion Twitter réussie!');
+      return result;
     } catch (e) {
-      throw e;
+      print('Erreur Twitter Sign-In: $e');
+      throw 'Erreur de connexion Twitter: $e';
     }
   }
-
-  /*Future<UserCredential?> signInWithTwitter() async {
-    try {
-      final twitterLogin = TwitterLogin(
-        apiKey: 'GmANeLThfVRqYDY4xRPi09yqp',
-        apiSecretKey: '99PRg6wDPgsGLTJwHnHtHsxDJ7d4tsYCisCOJ7qahrWSoIGdVP',
-        redirectURI: 'https://clstapp-f1cd7.firebaseapp.com/__/auth/handler',
-        //'twitterkit-GmANeLThfVRqYDY4xRPi09yqp://',
-      );
-
-      final authResult = await twitterLogin.login();
-      if (authResult.authToken == null) return null;
-
-      final twitterAuthCredential = TwitterAuthProvider.credential(
-        accessToken: authResult.authToken!,
-        secret: authResult.authTokenSecret!,
-      );
-
-      return await _auth.signInWithCredential(twitterAuthCredential);
-    } catch (e) {
-      throw e.toString();
-    }
-  }*/
 
   Future<void> signOut() async {
     await _googleSignIn.signOut();

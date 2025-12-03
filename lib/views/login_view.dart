@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clstapp/widgets/custom_text_field.dart';
 import 'package:clstapp/widgets/custom_button.dart';
-import 'package:clstapp/widgets/loading_button.dart';
-import 'package:clstapp/widgets/message_box.dart';
 import 'package:clstapp/widgets/social_login_button.dart';
 import 'package:clstapp/controller/auth_ctrl.dart';
 
@@ -22,12 +20,16 @@ class _LoginViewState extends State<LoginView> {
 
   Future<void> _signIn() async {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
-      MessageBox.show(context, "Erreur", "Veuillez remplir tous les champs");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Veuillez remplir tous les champs")),
+      );
       return;
     }
     
     if (!_emailController.text.contains('@') || !_emailController.text.endsWith('.com')) {
-      MessageBox.show(context, "Erreur", "Mauvais format");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Mauvais format")),
+      );
       return;
     }
 
@@ -39,7 +41,9 @@ class _LoginViewState extends State<LoginView> {
       }
     } catch (e) {
       if (mounted) {
-        MessageBox.show(context, "Erreur", e.toString());
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Erreur: ${e.toString()}")),
+        );
       }
     } finally {
       if (mounted) {
@@ -56,7 +60,9 @@ class _LoginViewState extends State<LoginView> {
       }
     } catch (e) {
       if (mounted) {
-        MessageBox.show(context, "Erreur", "Connexion Google échouée");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Connexion Google échouée")),
+        );
       }
     }
   }
@@ -69,7 +75,9 @@ class _LoginViewState extends State<LoginView> {
       }
     } catch (e) {
       if (mounted) {
-        MessageBox.show(context, "Erreur", "Connexion Twitter échouée");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Connexion Twitter échouée")),
+        );
       }
     }
   }
@@ -132,7 +140,7 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       const SizedBox(height: 32),
                       _isLoading
-                          ? const LoadingButton(text: "Connexion...")
+                          ? const CircularProgressIndicator()
                           : CustomButton(
                               text: "Se connecter",
                               onPressed: _signIn,

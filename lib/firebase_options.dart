@@ -46,7 +46,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '42299134512',
     projectId: 'clstapp-f1cd7',
     authDomain: 'clstapp-f1cd7.firebaseapp.com',
-    storageBucket: 'clstapp-f1cd7.firebasestorage.app',
+    //storageBucket: 'clstapp-f1cd7.firebasestorage.app',
+    storageBucket: 'clstapp-f1cd7.appspot.com',
     measurementId: 'G-7ZFY33GTV0',
   );
 

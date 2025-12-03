@@ -5,26 +5,10 @@ class MessageBox extends StatelessWidget {
   final Color color;
 
   const MessageBox({
-    Key? key,
+    super.key,
     required this.message,
     this.color = Colors.red,
-  }) : super(key: key);
-
-  static void show(BuildContext context, String title, String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
+  });
 
   @override
   Widget build(BuildContext context) {
