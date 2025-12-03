@@ -21,6 +21,13 @@ class _SignupViewState extends State<SignupView> {
       );
       return;
     }
+    
+    if (!_emailController.text.contains('@')) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Email invalide')),
+      );
+      return;
+    }
 
     setState(() => _isLoading = true);
     try {

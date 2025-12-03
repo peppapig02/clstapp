@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:clstapp/widgets/custom_text_field.dart';
-import 'package:clstapp/widgets/custom_button.dart';
-import 'package:clstapp/widgets/social_login_button.dart';
-import 'package:clstapp/controller/auth_ctrl.dart';
+import '../controller/auth_ctrl.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -26,12 +23,7 @@ class _LoginViewState extends State<LoginView> {
       return;
     }
     
-    if (!_emailController.text.contains('@') || !_emailController.text.endsWith('.com')) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Mauvais format")),
-      );
-      return;
-    }
+
 
     setState(() => _isLoading = true);
     try {
@@ -123,27 +115,43 @@ class _LoginViewState extends State<LoginView> {
                         ),
                       ),
                       const SizedBox(height: 32),
-                      CustomTextField(
+                      TextField(
                         controller: _emailController,
-                        labelText: "Email",
                         keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          labelText: "Email",
+                          prefixIcon: const Icon(Icons.email),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
                       ),
                       const SizedBox(height: 20),
-                      CustomTextField(
+                      TextField(
                         controller: _passwordController,
-                        labelText: "Mot de passe",
                         obscureText: _obscurePassword,
-                        suffixIcon: IconButton(
-                          icon: Icon(_obscurePassword ? Icons.visibility : Icons.visibility_off),
-                          onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                        decoration: InputDecoration(
+                          labelText: "Mot de passe",
+                          prefixIcon: const Icon(Icons.lock),
+                          suffixIcon: IconButton(
+                            icon: Icon(_obscurePassword ? Icons.visibility : Icons.visibility_off),
+                            onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                          ),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                         ),
                       ),
                       const SizedBox(height: 32),
                       _isLoading
                           ? const CircularProgressIndicator()
-                          : CustomButton(
-                              text: "Se connecter",
-                              onPressed: _signIn,
+                          : SizedBox(
+                              width: double.infinity,
+                              height: 50,
+                              child: ElevatedButton(
+                                onPressed: _signIn,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFFEC4899),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                ),
+                                child: const Text("Se connecter", style: TextStyle(color: Colors.white)),
+                              ),
                             ),
                       const SizedBox(height: 24),
                       const Text(
@@ -151,18 +159,34 @@ class _LoginViewState extends State<LoginView> {
                         style: TextStyle(color: Color(0xFF831843)),
                       ),
                       const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      Column(
                         children: [
-                          SocialLoginButton(
-                            icon: Icons.g_mobiledata,
-                            text: "Google",
-                            onPressed: _signInWithGoogle,
+                          SizedBox(
+                            width: double.infinity,
+                            height: 45,
+                            child: OutlinedButton.icon(
+                              onPressed: _signInWithGoogle,
+                              icon: const Icon(Icons.g_mobiledata, size: 20),
+                              label: const Text("Google"),
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(color: Color(0xFFEC4899)),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              ),
+                            ),
                           ),
-                          SocialLoginButton(
-                            icon: Icons.alternate_email,
-                            text: "Twitter",
-                            onPressed: _signInWithTwitter,
+                          const SizedBox(height: 12),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 45,
+                            child: OutlinedButton.icon(
+                              onPressed: _signInWithTwitter,
+                              icon: const Icon(Icons.alternate_email, size: 20),
+                              label: const Text("Twitter"),
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(color: Color(0xFF1DA1F2)),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              ),
+                            ),
                           ),
                         ],
                       ),
